@@ -1,0 +1,178 @@
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card">
+        <div class="card-header bg-white border-0 mx-4 py-4">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <h2 class="mainColor fw-bold">LaughInSure <img src="../../assets/svgs/emoji-laughing-fill.svg" alt="">...
+                    </h2>
+                    <small class="text-secondary"><i><b>"Light-hearted insurance experience."</b></i></small>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 align-self-center text-end">
+                    <button class="btn btn-mainColor text-white rounded-5 btn-sm" [routerLink]="['/list-insurance/list']">List Insurance <img src="../../assets/svgs/chevron-double-right.svg" alt="chevron-icon"></button>
+                </div>
+            </div>
+        </div> 
+        <div class="card-body">
+            <div class="row px-4">
+                <div class="col-sm-12 col-lg-6 col-md-6">
+                    <p class="lh-base mainColor display-5">
+                        Life Insurance <br>
+                        You'll Love <br>
+                        Really
+                    </p>
+                    <p class="my-4">
+                        Where genuine laughter is the premium, and our policies offer a safety net woven with happiness.
+                        We
+                        believe in securing not just futures, but moments of joy, ensuring that life's uncertainties are
+                        met
+                        with smiles.
+                    </p>
+                    <button class="btn btn-mainColor text-white rounded-5 my-3 px-5" (click)="addUserDetail()">Add User
+                        <img src="../../assets/svgs/person-plus-fill.svg" class="align-text-bottom" alt="personIcon">
+                    </button>
+                </div>
+                <div class="col-sm-12 col-lg-6 col-md-6 d-flex align-self-center">
+                    <img src="../../assets/pngs/Life-insurance-policy-Free-Vector-image-2.png"
+                        style="object-fit: contain;" class="img-fluid" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Add User Profile Modal -->
+<div class="modal fade" id="userProfileModal" tabindex="-1" aria-labelledby="userProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-4" id="userProfileModal">Add User & Insurance Details</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="userInsuranceForm">
+                    <div class="row">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-6">
+
+                                    <div class="fw-bold fs-5 mb-2">User Details</div>
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12 col-lg-6">
+                                            <div class="form-group py-2">
+                                                <label for="fname">First Name<small
+                                                        class="text-danger">*</small></label>
+                                                <input type="text" id="fname" class="form-control"
+                                                    formControlName="fname"
+                                                    [class.is-invalid]="!userInsuranceForm.controls['fname'].valid && userInsuranceForm.controls['fname'].touched">
+                                                    <span *ngIf="!userInsuranceForm.controls['fname'].valid && userInsuranceForm.controls['fname'].touched"><small class="text-danger">Name is required*</small></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-sm-12 col-lg-6">
+                                            <div class="form-group py-2">
+                                                <label fordropdown-menu-end w-100="lname">Last Name</label>
+                                                <input type="text" id="lname" class="form-control"
+                                                    formControlName="lname">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12 col-lg-6">
+                                            <div class="form-group py-2">
+                                                <label for="email">Email<small class="text-danger">*</small></label>
+                                                <input type="email" id="email" class="form-control"
+                                                    formControlName="email"
+                                                    [class.is-invalid]="!userInsuranceForm.controls['email'].valid && userInsuranceForm.controls['email'].touched">
+                                                    <span *ngIf="!userInsuranceForm.controls['email'].valid && userInsuranceForm.controls['email'].touched"><small class="text-danger">Enter a valid email*</small></span>
+                                                </div>
+                                        </div>
+                                        <div class="col-md-12 col-sm-12 col-lg-6">
+                                            <div class="form-group py-2">
+                                                <label for="mobileNo">Mobile Number<small
+                                                        class="text-danger">*</small></label>
+                                                <input type="text" id="mobileNo" class="form-control"
+                                                    formControlName="mobileNo"
+                                                    [class.is-invalid]="!userInsuranceForm.controls['mobileNo'].valid && userInsuranceForm.controls['mobileNo'].touched">
+                                                    <span *ngIf="!userInsuranceForm.controls['mobileNo'].valid && userInsuranceForm.controls['mobileNo'].touched"><small class="text-danger">Mobile number is required*</small></span>
+                                                </div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="row">
+                                        <div class="col"> -->
+                                    <div class="form-group py-2">
+                                        <label for="address">Address<small class="text-danger">*</small></label>
+                                        <input type="text" id="address" class="form-control" formControlName="address"
+                                            [class.is-invalid]="!userInsuranceForm.controls['address'].valid && userInsuranceForm.controls['address'].touched">
+                                            <span *ngIf="!userInsuranceForm.controls['address'].valid && userInsuranceForm.controls['address'].touched"><small class="text-danger">Address is required*</small></span>
+                                        </div>
+                                    <!-- </div>
+                                    </div> -->
+                                    <div class="form-group py-2">
+                                        <div class="fw-bold fs-5 mb-2 mt-5">Policy Information</div>
+                                        <label for="insuranceName">Insurance Name<small
+                                                class="text-danger">*</small></label>
+                                        <div class="dropdown">
+                                            <button class="btn bg-white text-dark w-100 text-start dropdown-toggle "
+                                                style="border: 1px solid #ced4da" type="button"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                {{selectedInsurance}}
+                                            </button>
+                                            <ul class="dropdown-menu w-100">
+                                                <li *ngFor="let insurance of insurances" (click)="selectInsurance(insurance)"><a class="dropdown-item"
+                                                        >{{insurance}}</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="form-group py-2">
+                                        <label for="coverage">Coverage<small class="text-danger">*</small></label>
+                                        <textarea name="coverage" class="form-control" formControlName="coverage"
+                                            id="coverage" cols="10"
+                                            [class.is-invalid]="!userInsuranceForm.controls['coverage'].valid && userInsuranceForm.controls['coverage'].touched"
+                                            rows="4"></textarea>
+                                            <span *ngIf="!userInsuranceForm.controls['coverage'].valid && userInsuranceForm.controls['coverage'].touched"><small class="text-danger">Coverage is required*</small></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-lg-6">
+                                    <div class="fw-bold fs-5 mb-2">Coverage Details</div>
+                                    <div class="form-group py-2">
+                                        <label for="insurerName">Insurer Name<small
+                                                class="text-danger">*</small></label>
+                                        <input type="text" id="insuranceName" class="form-control"
+                                            formControlName="insurerName"
+                                            [class.is-invalid]="!userInsuranceForm.controls['insurerName'].valid && userInsuranceForm.controls['insurerName'].touched">
+                                            <span *ngIf="!userInsuranceForm.controls['insurerName'].valid && userInsuranceForm.controls['insurerName'].touched"><small class="text-danger">Insurer name is required*</small></span>
+                                        </div>
+                                    <div class="form-group py-2">
+                                        <label for="nomineeName">Nominee Name<small
+                                                class="text-danger">*</small></label>
+                                        <input type="text" id="insuranceName" class="form-control"
+                                            formControlName="nomineeName"
+                                            [class.is-invalid]="!userInsuranceForm.controls['nomineeName'].valid && userInsuranceForm.controls['nomineeName'].touched">
+                                            <span *ngIf="!userInsuranceForm.controls['nomineeName'].valid && userInsuranceForm.controls['nomineeName'].touched"><small class="text-danger">Nominee name is required*</small></span>
+                                        </div>
+                                    <div class="form-group py-2">
+                                        <label for="dateExpiry">Date Expiry<small class="text-danger">*</small></label>
+                                        <input type="date" id="dateExpiry" class="form-control"
+                                            formControlName="dateExpiry"
+                                            [class.is-invalid]="!userInsuranceForm.controls['dateExpiry'].valid && userInsuranceForm.controls['dateExpiry'].touched">
+                                            <span *ngIf="!userInsuranceForm.controls['dateExpiry'].valid && userInsuranceForm.controls['dateExpiry'].touched"><small class="text-danger">Enter a valid date*</small></span>
+                                    </div>
+                                    <div class="form-group py-2">
+                                        <label for="amount">Claim Amount<small class="text-danger">*</small></label>
+                                        <input type="number" id="amount" class="form-control" formControlName="amount"
+                                            [class.is-invalid]="!userInsuranceForm.controls['amount'].valid && userInsuranceForm.controls['amount'].touched">
+                                            <span *ngIf="!userInsuranceForm.controls['amount'].valid && userInsuranceForm.controls['amount'].touched"><small class="text-danger">Amount is required*</small></span>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-mainColor text-white" [disabled]="userInsuranceForm.invalid"
+                    (click)="saveUserDetails()">Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

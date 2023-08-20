@@ -1,0 +1,339 @@
+<div class="card my-5">
+    <div class="card-header d-flex justify-content-between">
+        <div>
+            <h4 class="display-5 mainColor" style="font-family: 'Times New Roman', Times, serif;">List Insurances</h4>
+        </div>
+        <button class="align-self-center btn btn-mainColor btn-sm text-white " [routerLink]="['/add-user-profile']">
+            Back
+        </button>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive overflow-auto" style="height: 500px;">
+
+            <table class="table table-hover h-100 overflow-auto">
+                <thead class="bg-light">
+                    <tr>
+                        <th scope="col" style="padding-left: 18px;">S.No</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Insurance Name</th>
+                        <th scope="col">Date Expiry</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col" class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="listInsurances$ | async as listInsurances">
+                    <tr *ngFor="let insurance of listInsurances; let i = index">
+                        <td style="padding-left: 18px;">{{i + 1}}</td>
+                        <td>{{insurance.fname + ' ' + (insurance.lname || '')}}</td>
+                        <td>{{insurance.email}}</td>
+                        <td>{{insurance.insurerName}}</td>
+                        <td>{{insurance.dateExpiry}}</td>
+                        <td>{{insurance.amount}}</td>
+                        <td>
+                            <div class="text-center">
+                                <button class="btn btn-secondary btn-sm" (click)="viewInsuranceModal(insurance)">
+                                    View
+                                </button>
+                                <button class="btn btn-dark ms-2 btn-sm" (click)="editInsuranceModal(insurance)">
+                                    Edit
+                                </button>
+                                <button class="btn btn-outline-danger ms-2 btn-sm"
+                                    (click)="deleteInsranceModal(insurance)">
+                                    Delete
+                                </button>
+                            </div>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- Delete Modal-->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5 mainColor" id="deleteModal">Delete Insurance</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure want to delete this user <span class="mainColor">{{name}}</span>?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger btn-sm" (click)="deleteInsurance()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- View Modal -->
+<div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5 mainColor" id="viewModalLabel">Insurance Details</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="row mb-2">
+                                    <div class="col-6">
+                                        First Name:
+                                    </div>
+                                    <div class="col-6">
+                                        {{viewInsurance?.fname}}
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-6">
+                                        Last Name:
+                                    </div>
+                                    <div class="col-6">
+                                        {{viewInsurance?.lname || 'Not Available'}}
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-6">
+                                        Email:
+                                    </div>
+                                    <div class="col-6">
+                                        {{viewInsurance?.email}}
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-6">
+                                        Mobile No:
+                                    </div>
+                                    <div class="col-6">
+                                        {{viewInsurance?.mobileNo}}
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-6">
+                                        Address:
+                                    </div>
+                                    <div class="col-6">
+                                        {{viewInsurance?.address}}
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-6">
+                                        Insurance Name:
+                                    </div>
+                                    <div class="col-6">
+                                        {{viewInsurance?.insuranceName}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        Coverage:
+                                    </div>
+                                    <div class="col-6 text-break">
+                                        {{viewInsurance?.coverage}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="row mb-2">
+                                    <div class="col-6">
+                                        Insurer Name:
+                                    </div>
+                                    <div class="col-6">
+                                        {{viewInsurance?.insurerName}}
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-6">
+                                        Nominee Name:
+                                    </div>
+                                    <div class="col-6">
+                                        {{viewInsurance?.nomineeName}}
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-6">
+                                        Date Expiry:
+                                    </div>
+                                    <div class="col-6">
+                                        {{viewInsurance?.dateExpiry}}
+                                    </div>
+                                </div>
+                                <div class="row ">
+                                    <div class="col-6">
+                                        Claim Amount:
+                                    </div>
+                                    <div class="col-6">
+                                        {{viewInsurance?.amount}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Edit Modal-->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-4 mainColor" id="editModal">Edit User & Insurance Details</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="editInsuranceForm">
+                    <div class="row">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-6">
+
+                                    <div class="fw-bold fs-5 mb-2">User Details</div>
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12 col-lg-6">
+                                            <div class="form-group py-2">
+                                                <label for="fname">First Name<small
+                                                        class="text-danger">*</small></label>
+                                                <input type="text" id="fname" class="form-control"
+                                                    formControlName="fname"
+                                                    [class.is-invalid]="!editInsuranceForm.controls['fname'].valid && editInsuranceForm.controls['fname'].touched">
+                                                <span
+                                                    *ngIf="!editInsuranceForm.controls['fname'].valid && editInsuranceForm.controls['fname'].touched"><small
+                                                        class="text-danger">Name is required*</small></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-sm-12 col-lg-6">
+                                            <div class="form-group py-2">
+                                                <label fordropdown-menu-end w-100="lname">Last Name</label>
+                                                <input type="text" id="lname" class="form-control"
+                                                    formControlName="lname">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12 col-lg-6">
+                                            <div class="form-group py-2">
+                                                <label for="email">Email<small class="text-danger">*</small></label>
+                                                <input type="email" id="email" class="form-control"
+                                                    formControlName="email"
+                                                    [class.is-invalid]="!editInsuranceForm.controls['email'].valid && editInsuranceForm.controls['email'].touched">
+                                                <span
+                                                    *ngIf="!editInsuranceForm.controls['email'].valid && editInsuranceForm.controls['email'].touched"><small
+                                                        class="text-danger">Enter a valid email*</small></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-sm-12 col-lg-6">
+                                            <div class="form-group py-2">
+                                                <label for="mobileNo">Mobile Number<small
+                                                        class="text-danger">*</small></label>
+                                                <input type="text" id="mobileNo" class="form-control"
+                                                    formControlName="mobileNo"
+                                                    [class.is-invalid]="!editInsuranceForm.controls['mobileNo'].valid && editInsuranceForm.controls['mobileNo'].touched">
+                                                <span
+                                                    *ngIf="!editInsuranceForm.controls['mobileNo'].valid && editInsuranceForm.controls['mobileNo'].touched"><small
+                                                        class="text-danger">Mobile number is required*</small></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="row">
+                                        <div class="col"> -->
+                                    <div class="form-group py-2">
+                                        <label for="address">Address<small class="text-danger">*</small></label>
+                                        <input type="text" id="address" class="form-control" formControlName="address"
+                                            [class.is-invalid]="!editInsuranceForm.controls['address'].valid && editInsuranceForm.controls['address'].touched">
+                                        <span
+                                            *ngIf="!editInsuranceForm.controls['address'].valid && editInsuranceForm.controls['address'].touched"><small
+                                                class="text-danger">Address is required*</small></span>
+                                    </div>
+                                    <!-- </div>
+                                    </div> -->
+                                    <div class="form-group py-2">
+                                        <div class="fw-bold fs-5 mb-2 mt-5">Policy Information</div>
+                                        <label for="insuranceName">Insurance Name<small
+                                                class="text-danger">*</small></label>
+                                        <div class="dropdown">
+                                            <button class="btn bg-white text-dark w-100 text-start dropdown-toggle "
+                                                style="border: 1px solid #ced4da" type="button"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                {{selectedInsurance}}
+                                            </button>
+                                            <ul class="dropdown-menu w-100">
+                                                <li *ngFor="let insurance of insuranceTypes"><a class="dropdown-item"
+                                                        (click)="selectInsuranceType(insurance)">{{insurance}}</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="form-group py-2">
+                                        <label for="coverage">Coverage<small class="text-danger">*</small></label>
+                                        <textarea name="coverage" class="form-control" formControlName="coverage"
+                                            id="coverage" cols="10"
+                                            [class.is-invalid]="!editInsuranceForm.controls['coverage'].valid && editInsuranceForm.controls['coverage'].touched"
+                                            rows="4"></textarea>
+                                        <span
+                                            *ngIf="!editInsuranceForm.controls['coverage'].valid && editInsuranceForm.controls['coverage'].touched"><small
+                                                class="text-danger">Coverage is required*</small></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-lg-6">
+                                    <div class="fw-bold fs-5 mb-2">Coverage Details</div>
+                                    <div class="form-group py-2">
+                                        <label for="insurerName">Insurer Name<small
+                                                class="text-danger">*</small></label>
+                                        <input type="text" id="insuranceName" class="form-control"
+                                            formControlName="insurerName"
+                                            [class.is-invalid]="!editInsuranceForm.controls['insurerName'].valid && editInsuranceForm.controls['insurerName'].touched">
+                                        <span
+                                            *ngIf="!editInsuranceForm.controls['insurerName'].valid && editInsuranceForm.controls['insurerName'].touched"><small
+                                                class="text-danger">Insurer name is required*</small></span>
+                                    </div>
+                                    <div class="form-group py-2">
+                                        <label for="nomineeName">Nominee Name<small
+                                                class="text-danger">*</small></label>
+                                        <input type="text" id="insuranceName" class="form-control"
+                                            formControlName="nomineeName"
+                                            [class.is-invalid]="!editInsuranceForm.controls['nomineeName'].valid && editInsuranceForm.controls['nomineeName'].touched">
+                                        <span
+                                            *ngIf="!editInsuranceForm.controls['nomineeName'].valid && editInsuranceForm.controls['nomineeName'].touched"><small
+                                                class="text-danger">Nominee name is required*</small></span>
+                                    </div>
+                                    <div class="form-group py-2">
+                                        <label for="dateExpiry">Date Expiry<small class="text-danger">*</small></label>
+                                        <input type="date" id="dateExpiry" class="form-control"
+                                            formControlName="dateExpiry"
+                                            [class.is-invalid]="!editInsuranceForm.controls['dateExpiry'].valid && editInsuranceForm.controls['dateExpiry'].touched">
+                                        <span
+                                            *ngIf="!editInsuranceForm.controls['dateExpiry'].valid && editInsuranceForm.controls['dateExpiry'].touched"><small
+                                                class="text-danger">Enter a valid date*</small></span>
+                                    </div>
+                                    <div class="form-group py-2">
+                                        <label for="amount">Claim Amount<small class="text-danger">*</small></label>
+                                        <input type="number" id="amount" class="form-control" formControlName="amount"
+                                            [class.is-invalid]="!editInsuranceForm.controls['amount'].valid && editInsuranceForm.controls['amount'].touched">
+                                        <span
+                                            *ngIf="!editInsuranceForm.controls['amount'].valid && editInsuranceForm.controls['amount'].touched"><small
+                                                class="text-danger">Amount is required*</small></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger text-white" [disabled]="editInsuranceForm.invalid"
+                    (click)="updateInsurance()">Update
+                </button>
+            </div>
+        </div>
+    </div>
