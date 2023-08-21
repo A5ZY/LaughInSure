@@ -88,7 +88,7 @@
                                             <div class="form-group py-2">
                                                 <label for="mobileNo">Mobile Number<small
                                                         class="text-danger">*</small></label>
-                                                <input type="text" id="mobileNo" class="form-control"
+                                                <input type="tel" id="mobileNo" class="form-control"
                                                     formControlName="mobileNo"
                                                     [class.is-invalid]="!userInsuranceForm.controls['mobileNo'].valid && userInsuranceForm.controls['mobileNo'].touched">
                                                     <span *ngIf="!userInsuranceForm.controls['mobileNo'].valid && userInsuranceForm.controls['mobileNo'].touched"><small class="text-danger">Mobile number is required*</small></span>

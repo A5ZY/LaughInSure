@@ -8,11 +8,11 @@
         </button>
     </div>
     <div class="card-body p-0">
-        <div class="table-responsive overflow-auto" style="height: 500px;">
+        <div class="table-responsive h-100 overflow-auto"  *ngIf="insuranceList?.length">
 
             <table class="table table-hover h-100 overflow-auto">
                 <thead class="bg-light">
-                    <tr>
+                    <tr style="height: 20px;">
                         <th scope="col" style="padding-left: 18px;">S.No</th>
                         <th scope="col">Name</th>
                         <th scope="col">Email</th>
@@ -22,8 +22,8 @@
                         <th scope="col" class="text-center">Action</th>
                     </tr>
                 </thead>
-                <tbody *ngIf="listInsurances$ | async as listInsurances">
-                    <tr *ngFor="let insurance of listInsurances; let i = index">
+                <tbody *ngIf="insuranceList?.length">
+                    <tr *ngFor="let insurance of insuranceList; let i = index">
                         <td style="padding-left: 18px;">{{i + 1}}</td>
                         <td>{{insurance.fname + ' ' + (insurance.lname || '')}}</td>
                         <td>{{insurance.email}}</td>
@@ -236,7 +236,7 @@
                                             <div class="form-group py-2">
                                                 <label for="mobileNo">Mobile Number<small
                                                         class="text-danger">*</small></label>
-                                                <input type="text" id="mobileNo" class="form-control"
+                                                <input type="tel" id="mobileNo" class="form-control"
                                                     formControlName="mobileNo"
                                                     [class.is-invalid]="!editInsuranceForm.controls['mobileNo'].valid && editInsuranceForm.controls['mobileNo'].touched">
                                                 <span

@@ -19,7 +19,7 @@ export class AddUserInsuranceProfileComponent implements OnInit {
       fname: new FormControl('', Validators.required),
       lname: new FormControl(''),
       email: new FormControl('', [Validators.email, Validators.required]),
-      mobileNo: new FormControl('', Validators.required),
+      mobileNo: new FormControl('', [Validators.required,Validators.pattern('^[0-9]{10}$')]),
       address: new FormControl('', Validators.required),
       insuranceName: new FormControl(this.selectedInsurance),
       coverage: new FormControl('', Validators.required),

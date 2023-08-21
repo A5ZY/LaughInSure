@@ -27,12 +27,13 @@ export class InsuranceDetailsDashboardComponent implements OnInit {
   selectedInsurance = '';
   editData: any;
   editInsuranceId!: string;
+  insuranceList: any;
   constructor(private fakeApi: FakeApiService, private route: ActivatedRoute, private cdr: ChangeDetectorRef) {
     this.editInsuranceForm = new FormGroup({
       fname: new FormControl('', Validators.required),
       lname: new FormControl(''),
       email: new FormControl('', [Validators.email, Validators.required]),
-      mobileNo: new FormControl('', Validators.required),
+      mobileNo: new FormControl('', [Validators.required,Validators.pattern('^[0-9]{10}$')]),
       address: new FormControl('', Validators.required),
       insuranceName: new FormControl(this.selectedInsurance),
       coverage: new FormControl('', Validators.required),
@@ -41,22 +42,29 @@ export class InsuranceDetailsDashboardComponent implements OnInit {
       dateExpiry: new FormControl('', Validators.required),
       amount: new FormControl('', Validators.required)
     })
-    this.getData();
   }
 
   ngOnInit() {
+    this.getData();
+    this.fakeApi.refreshRequired.subscribe((data: any) => {
+      console.log('data', data);
+      this.getData();
+    })
   }
   getData() {
-    this.listInsurances$ = this.fakeApi.getListOfInsurance().pipe(map((listInsurance: any) => {
+    this.insuranceList = [];
+    this.fakeApi.getListOfInsurance().pipe(map((listInsurance: any) => {
       this.insurances = [];
       for (const lInsurance in listInsurance) {
         if (listInsurance.hasOwnProperty(lInsurance)) {
           this.insurances.push({ ...listInsurance[lInsurance], id: lInsurance })
         }
       };
-      console.log(this.insurances);
       return this.insurances;
-    }));
+    })).subscribe((data: any) => {
+      this.insuranceList.push(...data);
+      this.cdr.markForCheck();
+    });
   }
   deleteInsranceModal(insData: any) {
     this.insuranceId = insData.id;
